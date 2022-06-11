@@ -1,63 +1,195 @@
-import Head from 'next/head'
+import Head from "next/head";
+//import Image from "react-konva";
+import Image from "next/image";
+import {
+  Button,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  FormFeedback,
+} from "reactstrap";
+// import styles from "..styles/Home.module.css"
+import React, { useState } from "react";
+//import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
 export default function Home() {
+  const [shippingState, setShippingState] = useState("placed");
+  //const [buttonState, setButtonState] = useState("true");
+
+  //REMOVE FLAG WHEN STATES ARE FINALISED (FLAG FOR TESTING). LEAVE RETURNED,DELIVERED AND SHIPPED BELOW(DONT COMMENT OR DELETE)
+  
+  let returned = "b";
+  let delivered = "b";
+  let shipped = "b";
+
+  //FLAGS
+  let flag = "placed";
+  if (flag === "returned") {
+    returned = "a";
+  }
+  if (flag === "delivered" || flag === "returned") {
+    delivered = "a";
+  }
+  if (flag === "shipped" || flag === "delivered" || flag === "returned") {
+    shipped = "a";
+  }
+
+
+
+  //States
+  if (shippingState === "returned") {
+    returned = "a";
+  }
+  if (shippingState === "delivered" || shippingState === "returned") {
+    delivered = "a";
+  }
+  if (
+    shippingState === "shipped" ||
+    shippingState === "delivered" ||
+    shippingState === "returned"
+  ) {
+    shipped = "a";
+  }
+
+  // function returnButton(){
+  //   if (flag == "placed") {
+  //     buttonState = "false";
+  //   }
+  //   setButtonState(buttonState)
+  //  };
+
+  //   const handleOnClick = () => {
+  //     returnButton();
+  //     if (shippingState == "placed"){
+  //       setShippingState("returned");
+  //   }
+  // };
+
+  //Return Order Button
+  function handleOnClick() {
+    //returnButton();
+    if (shippingState === "placed") {
+      setShippingState("returned");
+    }
+  }
   return (
-    <div className="container">
+    <div style={{ color: "#00573f" }} className="body">
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+        />
       </Head>
 
       <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+        <h1 style={{ color: "#defe11" }}>
+          Rabbit Mart
+          <a href="https://imgbb.com/">
+            <img
+              style={{ marginLeft: 8 }}
+              src="https://i.ibb.co/3ccW2mr/1646429235054.jpg"
+              alt="1646429235054"
+              border="0"
+            />
+          </a>
         </h1>
 
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
+        <p style={{ color: "#defe11" }} className="description">
+          Shipping Status
         </p>
 
         <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
+          <a style={{ color: "#defe11" }} className="card">
+            <check>
+              <Image src="/checkcircle.svg" height={39} width={39} />
+              <detail>Order Placed</detail>
+            </check>
+            <check>
+              <Image
+                src={
+                  flag === "shipped" ||
+                  flag === "delivered" ||
+                  flag === "returned"
+                    ? "/arrowdown.svg"
+                    : "/arrowdowndimmed.svg"
+                }
+                height={100}
+                width={35}
+              />
+            </check>
+            <check>
+              <Image
+                src={
+                  flag === "shipped" ||
+                  flag === "delivered" ||
+                  flag === "returned"
+                    ? "/checkcircle.svg"
+                    : "/emptycircle.svg"
+                }
+                height={35}
+                width={35}
+              />
+              <detail className={shipped}>Order Shipped</detail>
+            </check>
+            <check>
+              <Image
+                src={
+                  flag === "delivered" || flag === "returned"
+                    ? "/arrowdown.svg"
+                    : "/arrowdowndimmed.svg"
+                }
+                height={100}
+                width={35}
+              />
+            </check>
+            <check>
+              <Image
+                src={
+                  flag === "delivered" || flag === "returned"
+                    ? "/checkcircle.svg"
+                    : "/emptycircle.svg"
+                }
+                height={35}
+                width={35}
+              />
+              <detail className={delivered}>Order Delivered</detail>
+            </check>
+            <check>
+              <Image
+                src={
+                  flag === "returned"
+                    ? "/arrowdown.svg"
+                    : "/arrowdowndimmed.svg"
+                }
+                height={100}
+                width={35}
+              />
+            </check>
+            <check>
+              <Image
+                src={
+                  flag === "returned" ? "/checkcircle.svg" : "/emptycircle.svg"
+                }
+                height={35}
+                width={35}
+              />
+              <detail className={returned}>Returned</detail>
+            </check>
+            <button
+              onclick={handleOnClick}
+              style={{
+                color: "#00573f",
+                background: "#defe11",
+                padding: 12,
+                fontSize: 20,
+              }}
+            >
+              Return Order
+            </button>
           </a>
         </div>
       </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className="logo" />
-        </a>
-      </footer>
 
       <style jsx>{`
         .container {
@@ -67,6 +199,7 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
+          backround-color: #00573f;
         }
 
         main {
@@ -76,6 +209,7 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
+          background: #00573f;
         }
 
         footer {
@@ -97,13 +231,29 @@ export default function Home() {
           align-items: center;
         }
 
-        a {
-          color: inherit;
+        .a {
+          color: #defe11;
           text-decoration: none;
         }
 
+        .b {
+          color: #7a862f;
+          text-decoration: none;
+        }
+        .button {
+          background-color: "#defe11";
+          border: none;
+          color: "#00573f";
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+        }
+        .button1 {background-color: #4CAF50;}
+
         .title a {
-          color: #0070f3;
+          background: #00573f;
           text-decoration: none;
         }
 
@@ -126,16 +276,10 @@ export default function Home() {
 
         .description {
           line-height: 1.5;
-          font-size: 1.5rem;
-        }
-
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+          font-size: 2rem;
+          background: #00573f;
+          color: #00573f;
+          text-decoration: underline;
         }
 
         .grid {
@@ -145,18 +289,21 @@ export default function Home() {
           flex-wrap: wrap;
 
           max-width: 800px;
-          margin-top: 3rem;
+          margin-top: 1rem;
         }
 
         .card {
-          margin: 1rem;
-          flex-basis: 45%;
-          padding: 1.5rem;
+          width: 650px;
+          height: 500px;
+          background: #00573f;
+          margin: 3rem;
+          flex-basis: 95%;
+          padding: 2rem;
           text-align: left;
-          color: inherit;
+          color: #defe11;
           text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
+          border: 5px solid #defe11;
+          border-radius: 20px;
           transition: color 0.15s ease, border-color 0.15s ease;
         }
 
@@ -169,7 +316,7 @@ export default function Home() {
 
         .card h3 {
           margin: 0 0 1rem 0;
-          font-size: 1.5rem;
+          font-size: 1.8rem;
         }
 
         .card p {
@@ -177,7 +324,22 @@ export default function Home() {
           font-size: 1.25rem;
           line-height: 1.5;
         }
-
+        .card check {
+          width: 100%;
+          height: 70px;
+          display: flex;
+          justify-content: left;
+          align-items: center;
+        }
+        .card detail {
+          padding:0 1.2rem;
+          font-size: 1.8rem;
+          flex: 1;
+          display: flex;
+         
+        }
+        
+        }
         .logo {
           height: 1em;
         }
@@ -193,11 +355,10 @@ export default function Home() {
       <style jsx global>{`
         html,
         body {
+          background-color: #defe11;
           padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
+          margin: ;
+          font-family: MyWebFont;
         }
 
         * {
@@ -205,5 +366,5 @@ export default function Home() {
         }
       `}</style>
     </div>
-  )
+  );
 }
